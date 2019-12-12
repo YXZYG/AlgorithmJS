@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>栈十进制转化二进制</title>
+</head>
+
+<body>
+    <script>
+
+        function Stack() {
+            this.items = [];
+            Stack.prototype.push = function (element) {
+                this.items.push(element)
+            }
+            Stack.prototype.pop = function () {
+                return this.items.pop()
+            }
+            Stack.prototype.peak = function () {
+                return this.items[this.items.length - 1]
+            }
+            Stack.prototype.size = function () {
+                return this.items.length
+            }
+            Stack.prototype.isEmpty = function () {
+                return this.items.length == 0
+            }
+            Stack.prototype.toString = function () {
+                let resultString = ''
+                for (i = 0; i < items.length; i++) {
+                    resultString += this.items[i]
+                }
+                return resultString
+            }
+        }
+
+        //函数：将十进制转二进制
+        function dec2bin(decNumber) {
+            let s = new Stack()
+            while (decNumber > 0) {
+                s.push(decNumber % 2)
+                decNumber = Math.floor(decNumber / 2)
+            }
+            let binString = ''
+            while (!s.isEmpty()) {
+                binString += s.pop()
+            }
+            return binString
+        }
+
+        alert(dec2bin(10))
+
+    </script>
+
+</body>
+
+</html>

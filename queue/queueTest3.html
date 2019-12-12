@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>优先级队列的封装</title>
+</head>
+
+<body>
+    <script>
+        function PriorityQueue() {
+
+            function QueueElement(element, priority) {
+                this.element = element
+                this.priority = priority
+            }
+
+            this.items = []
+
+            PriorityQueue.prototype.enqueue = function (element, priority) {
+                let qe = new QueueElement(element, priority)
+
+                if (this.items.length == 0) {
+                    this.element.push(qe)
+                }
+                else {
+                    let added = false
+                    for (i = 0; i < this.items.length; i++) {
+                        if (qe.priority < this.items[i].priority) {
+                            this.items.splice(i, 0, qe)
+                            added = true
+                            break
+                        }
+                    }
+                    if (!added) {
+                        this.items.push(qe)
+                    }
+                }
+            }
+
+
+
+
+            PriorityQueue.prototype.deQueue = function () {
+                return this.items.shift()
+            }
+            PriorityQueue.prototype.front = function () {
+                return this.items[this.items.length - 1]
+            }
+            PriorityQueue.prototype.isEmpty = function () {
+                return this.items.length == 0
+            }
+            PriorityQueue.prototype.size = function () {
+                return this.items.length
+            }
+            PriorityQueue.prototype.toString = function () {
+                let str = ''
+                for (i = 0; i < this.items.length; i++) {
+                    str += this.items[i] + ''
+                }
+                return str
+            }
+            let pq = new PriorityQueue()
+
+        }
+    </script>
+</body>
+
+</html>
