@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>队列封装</title>
+</head>
+
+<body>
+    <script>
+        function linkList() {
+            //内部类：节点类
+            function Node(data) {
+                this.data = data;
+                this.next = null;
+            }
+            //属性
+            this.head = null
+            this.length = 0
+
+            linkList.prototype.append = function (data) {
+                let newNode = new Node(data)
+                if (this.length == 0) {
+                    this.head = newNode;
+                } else {
+                    //找到最后一个节点
+                    let current = this.head;
+                    while (current.next) {
+                        current = current.next;
+                    }
+                    current.next = newNode;
+                }
+                this.length += 1;
+            }
+
+
+
+            linkList.prototype.toString = function () {
+                let current = this.head;
+                let str = "";
+                while (current) {
+                    str += current.data + ",";
+                    current = current.next;
+                }
+                return str;
+            }
+
+            linkList.prototype.insert = function (position, data) {
+                if (position < 0 || position > this.length) return false;
+                let newNode = new Node(data);
+                if (position == 0) {
+                    newNode.next = this.head
+                    this.head = newNode
+                } else {
+                    let index = 0
+                    let current = this.head
+                    let previous = null
+                    while (index++ < position) {
+                        previous = current
+                        current = current.next
+                    }
+                    newNode.next = current
+                    previous.next = newNode
+
+                }
+                this.length += 1
+                return true
+            }
+
+            linkList.prototype.get = function (position) {
+                if (position < 0 || position > this.length) return false;
+                let index = 0;
+                let current = this.head;
+                while (index++ < position) {
+                    current = current.next
+                }
+                return current.data;
+            }
+
+            linkList.prototype.indexOf = function (data) {
+                let index = 0;
+                let current = this.head;
+                while (current) {
+                    index++;
+                    current = current.next;
+                    if (data == current.data) {
+                        return index;
+                    }
+                }
+            }
+
+            linkList.prototype.update = function (position, newData) {
+                if (position < 0 || position > this.length) return false;
+                let current = this.head;
+                let index = 0;
+                while (index++ < position) {
+                    current = current.next
+                }
+                current.data = newData
+                return true
+            }
+
+            linkList.prototype.removeAt = function (position) {
+
+                if (position < 0 || position > this.length) return false;
+                let current = this.head;
+                if (position == 0) {
+                    this.head = current.next;
+                } else {
+                    let index = 0;
+                    let previous = null;
+                    while (index++ < position) {
+                        previous = current;
+                        current = current.next;
+                    }
+                    previous.next = current.next;
+                }
+                this.length -= 1;
+                return current.data;
+            }
+
+            linkList.prototype.remove = function (data) {
+                let position = this.indexOf(data);
+                return this.removeAt(position);
+            }
+
+            linkList.prototype.isEmpty = function () {
+                return this.length == 0;
+            }
+
+            linkList.prototype.size = function () {
+                return this.length;
+            }
+        }
+
+
+
+        let l = new linkList();
+        l.append("123")
+        l.append("234")
+        l.append("345")
+        // alert(l)
+        // l.insert(1, "2")
+        // alert(l)
+        alert(l.get(0))
+        l.removeAt(1)
+        alert(l)
+
+    </script>
+</body>
+
+</html>
