@@ -60,7 +60,7 @@
             }
 
             DoublyLinkedList.prototype.insert = function (position, data) {
-                if (position < 0 || position > this.length) return false;
+                if (position < 0 || position >= this.length) return false;
                 let newNode = new Node(data);
                 if (this.length == 0) {
                     this.head = newNode;
@@ -77,28 +77,112 @@
                     } else {
                         let current = this.head;
                         let index = 0;
-                        while(index++<position){
+                        while (index++ < position) {
                             current = current.next
                         }
-                            newNode.next = current;
-                            newNode.prev = current.prev;
-                            current.prev.next = newNode;
-                            current.prev = newNode;
-                       
+                        newNode.next = current;
+                        newNode.prev = current.prev;
+                        current.prev.next = newNode;
+                        current.prev = newNode;
+
                     }
-                        this.length += 1;
-                        return true;
+                    this.length += 1;
+                    return true;
                 }
             }
 
+            DoublyLinkedList.prototype.get = function (position) {
+                if (position < 0 || position >= this.length) return false;
+                let current = this.head;
+                let index = 0;
+                while (index++ < position) {
+                    current = current.next;
+                }
+                return current.data
+            }
+
+            DoublyLinkedList.prototype.indexOf = function (data) {
+                let current = this.head;
+                let index = 0;
+                while (current) {
+
+                    if (current.data == data) {
+                        return index;
+                    }
+                    current = current.next;
+                    index += 1;
+                }
+                return -1;
+            }
+
+            DoublyLinkedList.prototype.update = function (position, newData) {
+                if (position < 0 || position >= this.length) return false;
+                let current = this.head;
+                let index = 0;
+                while (index++ < position) {
+                    current = current.next;
+                }
+                current.data = newData;
+                return true;
+            }
+            DoublyLinkedList.prototype.removeAt = function (position) {
+                if (position < 0 || position >= this.length) return null;
+                //判断是否只有一个节点
+                let current = this.head;
+                if (this.length == 1) {
+                    this.head = null;
+                    this.tail = null;
+                } else {
+                    if (position == 0) {
+                        this.head.next.prev = null;
+                        this.head = this.head.next;
+                    } else if (position == this.length - 1) {
+                        this.tail.prev.next = null;
+                        this.tail = this.tail.prev;
+                    }
+                    else {
+                        let index = 0;
+
+                        while (index++ < position) {
+                            current = current.next
+                        }
+                        current.prev.next = current.next;
+                        current.next = current.prev;
+                    }
+                }
+                this.length -= 1;
+                return current.data;
+            }
+
+            DoublyLinkedList.prototype.remove = function (data) {
+                let index = this.indexOf(data);
+                return this.removeAt(index);
+            }
+
+            DoublyLinkedList.prototype.isEmpty = function () {
+                return this.length == 0;
+            }
+
+            DoublyLinkedList.prototype.size = function () {
+                return this.length;
+            }
+
+            //获取链表第一个元素
+            DoublyLinkedList.prototype.getHead = function () {
+                return this.head.data;
+            }
+            //获取链表最后一个元素
+            DoublyLinkedList.prototype.getTail = function () {
+                return this.tail.data;
+            }
         }
 
         let list = new DoublyLinkedList();
         list.append("123");
         list.append("123");
         list.append("123");
-        list.insert(2,"234")
-        alert(list);
+        list.update(2, "234")
+        alert(list.removeAt(0));
         // alert(list.backwardString());
         // alert(list.forwardString());
     </script>
